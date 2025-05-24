@@ -161,6 +161,22 @@ b)  Inspect the film titles manually. Which films form a film series? A
     "Despicable Me" and "Despicable Me 2". Create a dataframe which
     displays a list of the different series with the titles of the films
     and how many films belong to the series. Output the dataframe.
+    
+```{r}
+pixar_series_df <- data.frame(
+  series = c("Toy Story", "The Incredibles", "Cars", "Monsters", "Finding"),
+  film_titles = c(
+    "Toy Story; Toy Story 2; Toy Story 3; Toy Story 4",
+    "The Incredibles; Incredibles 2",
+    "Cars; Cars 2; Cars 3",
+    "Monsters, Inc.; Monsters University",
+    "Finding Nemo; Finding Dory"
+  ),
+  number_of_films = c(4, 2, 3, 2, 2),
+  stringsAsFactors = FALSE
+)
+print(pixar_series_df)
+```
 
 c)  Load the `public_response` dataframe into R. Convert the
     `cinema_score` variable into a factor while ensuring the factor
