@@ -102,6 +102,22 @@ b)  Push your code to this new repository by copying and executing the
 c)  Regularly push your latest changes to GitHub again and especially do
     so when you are finished with this sheet.
 
+## Library
+
+```{r}
+library(remotes)
+library(knitr)
+library(tidyverse)
+library(readr)
+library(kableExtra)
+library(easystats)
+library(ggstats)
+library(broom)
+library(coefplot)
+library(effects)
+library(reticulate)
+```
+
 ## Exercise 3: Pixar Films (4 Points)
 
 Download the `pixar_films` and `public_response` datasets from the
@@ -117,7 +133,27 @@ a)  Load the `pixar_films` dataset into R. Clean the dataset by removing
     the possible values and what do they mean? Create a factor variable
     for the film rating. Why is this appropriate?
 
-<!-- -->
+    ```{r}
+pixar_films <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-03-11/pixar_films.csv')
+    ```
+
+    ```{r}
+pixar_films_clean <- pixar_films %>% filter(!is.na(film), film != "")
+unique(pixar_films_clean$film_rating)
+    ```
+Die möglichen Werte sind G (General Audience: Für alle Altersgruppen geeignet) sowie PG (Parental Guidance: Einige Inhalte könnten ungeeignet für Kinder sein). Über die Filme mit Wert N/A lässt sich keine Aussage treffen. 
+
+Ein Faktor ist in R sinnvoll, wenn es sich um kategorische Daten mit natürlicher Reihenfolge handelt – wie bei den Filmratings "G" und "PG". Diese spiegeln zunehmende Alterseinschränkungen wider.
+
+Faktoren bewahren diese Reihenfolge, was bei Sortierungen, Visualisierungen oder statistischen Modellen hilfreich ist. Zudem sparen sie Speicherplatz und unterstützen eine saubere Datenanalyse.
+
+```{r}
+pixar_films_superclean <- pixar_films_clean %>% filter(film_rating != "N/A") %>%
+  mutate(film_rating_factor = factor(film_rating, 
+                                     levels = c("G", "PG"),
+                                     ordered = TRUE))
+```
+
 
 b)  Inspect the film titles manually. Which films form a film series? A
     film series can be identified by a common word in the titles of the
