@@ -134,18 +134,26 @@ a)  Load the `pixar_films` dataset into R. Clean the dataset by removing
     for the film rating. Why is this appropriate?
 
     ```{r}
-pixar_films <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-03-11/pixar_films.csv')
+    pixar_films <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-03-11/pixar_films.csv')
     ```
 
     ```{r}
-pixar_films_clean <- pixar_films %>% filter(!is.na(film), film != "")
-unique(pixar_films_clean$film_rating)
+    pixar_films_clean <- pixar_films %>% filter(!is.na(film), film != "")
+    unique(pixar_films_clean$film_rating)
     ```
-Die möglichen Werte sind G (General Audience: Für alle Altersgruppen geeignet) sowie PG (Parental Guidance: Einige Inhalte könnten ungeeignet für Kinder sein). Über die Filme mit Wert N/A lässt sich keine Aussage treffen. 
 
-Ein Faktor ist in R sinnvoll, wenn es sich um kategorische Daten mit natürlicher Reihenfolge handelt – wie bei den Filmratings "G" und "PG". Diese spiegeln zunehmende Alterseinschränkungen wider.
+    Die möglichen Werte sind G (General Audience: Für alle Altersgruppen
+    geeignet) sowie PG (Parental Guidance: Einige Inhalte könnten
+    ungeeignet für Kinder sein). Über die Filme mit Wert N/A lässt sich
+    keine Aussage treffen.
 
-Faktoren bewahren diese Reihenfolge, was bei Sortierungen, Visualisierungen oder statistischen Modellen hilfreich ist. Zudem sparen sie Speicherplatz und unterstützen eine saubere Datenanalyse.
+Ein Faktor ist in R sinnvoll, wenn es sich um kategorische Daten mit
+natürlicher Reihenfolge handelt – wie bei den Filmratings "G" und "PG".
+Diese spiegeln zunehmende Alterseinschränkungen wider.
+
+Faktoren bewahren diese Reihenfolge, was bei Sortierungen,
+Visualisierungen oder statistischen Modellen hilfreich ist. Zudem sparen
+sie Speicherplatz und unterstützen eine saubere Datenanalyse.
 
 ```{r}
 pixar_films_superclean <- pixar_films_clean %>% filter(film_rating != "N/A") %>%
@@ -154,14 +162,13 @@ pixar_films_superclean <- pixar_films_clean %>% filter(film_rating != "N/A") %>%
                                      ordered = TRUE))
 ```
 
-
 b)  Inspect the film titles manually. Which films form a film series? A
     film series can be identified by a common word in the titles of the
     films, often in conjunction with a number in the title, e.g.
     "Despicable Me" and "Despicable Me 2". Create a dataframe which
     displays a list of the different series with the titles of the films
     and how many films belong to the series. Output the dataframe.
-    
+
 ```{r}
 pixar_series_df <- data.frame(
   series = c("Toy Story", "The Incredibles", "Cars", "Monsters", "Finding"),
@@ -201,7 +208,6 @@ public_response_clean %>% arrange(cinema_score)
 pixar_combined <- left_join(pixar_films_superclean, public_response_clean, 
                             by = c("film" = "film"))
 ```
-
 
 d)  Choose one of the variables representing the public response and
     create a bar plot for the films belonging to a series. Here are the
@@ -244,7 +250,6 @@ ggplot(films_df, aes(x = series, y = rotten_tomatoes, fill = title)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-
 ## Exercise 4: Open Analysis (4 points)
 
 This exercise is a bit more open-ended. You can choose any dataset from
@@ -263,11 +268,45 @@ c)  Put the name / title of the dataset and a link to it below.
 d)  Come up with a (research) question you want to answer with the data
     and briefly explain why you believe this is an interesting question
     within one sentence. It should be a question that can be answered
-    with the dataset and using R.
+    with the dataset and using R
+
+    Q1: Welche Waffentypen wurden weltweit am häufigsten bei
+    Terroranschlägen verwendet und zeigt sich über die Jahre hinweg ein
+    Trend in der Nutzung bestimmter Waffenarten?
+
 e)  Use R to answer your chosen question. Please limit your analysis to
     the functions and techniques we have covered so far in the course.
     You are **not expected** to use advanced statistical models or
     external packages which haven't been introduced.
+    
+    Q1:
+
+    ```{r}
+terrorist_weapon <- read.csv("data/Terrorist attacks by weapon type - Global Terrorism Database (2018).csv")
+    ```
+
+```{r}
+waffen_spalten <- c(colnames(terrorist_weapon[3:12]))
+terrorist_weapon_long <- terrorist_weapon %>%
+  pivot_longer(cols = all_of(waffen_spalten), 
+               names_to = "Waffentyp", 
+               values_to = "Haeufigkeit")
+waffen_vis <- terrorist_weapon_long %>%
+  group_by(Year, Waffentyp) %>%
+  summarise(Haeufigkeit_pro_Jahr = sum(Haeufigkeit, na.rm = TRUE)) %>%
+  ungroup()
+```
+
+```{r}
+ggplot(waffen_vis, aes(x = Year, y = Haeufigkeit_pro_Jahr, color = Waffentyp)) +
+  geom_line() +
+  labs(title = "Trends der Waffentypen bei Terroranschlägen",
+       x = "Jahr",
+       y = "Häufigkeit",
+       color = "Waffentyp") +
+  theme_minimal()
+```
+
 f)  Create a meaningful plot / figure with the dataset. Make sure to
     provide a figure caption (via the chunk options / Rmarkdown) and
     correctly label the figure.
