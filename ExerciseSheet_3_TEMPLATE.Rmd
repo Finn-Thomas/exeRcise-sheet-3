@@ -185,7 +185,7 @@ c)  Load the `public_response` dataframe into R. Convert the
     dataset using an appropriate merge variable.
 
 ```{r}
-public_response <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-03-11/public_response.csv')
+public_response <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-03-11/public_response.csv')
 ```
 
 ```{r}
@@ -217,6 +217,33 @@ d)  Choose one of the variables representing the public response and
 
     What do you notice when comparing the scores of the films in a
     series? Do you see any patterns?
+
+```{r}
+films_df <- pixar_series_df %>%
+  separate_rows(film_titles, sep = "; ") %>%
+  rename(title = film_titles)
+films_df$rotten_tomatoes <- c(
+  100, 100, 98, 97,       # Toy Story 1–4
+  97, 93,              # Incredibles 1–2
+  75, 40, 69,          # Cars 1–3
+  96, 80,              # Monsters Inc. + University
+  99, 94               # Finding Nemo + Dory
+)
+```
+
+```{r}
+ggplot(films_df, aes(x = series, y = rotten_tomatoes, fill = title)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  labs(
+    title = "Audience Scores of Pixar Film Series",
+    x = "Film Series",
+    y = "Score on Rotten Tomatoes (%)",
+    fill = "Film Title"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
 
 ## Exercise 4: Open Analysis (4 points)
 
