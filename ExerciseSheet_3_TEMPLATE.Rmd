@@ -1,7 +1,7 @@
 ---
-title: "Exercise #X"
+title: "Exercise #3"
 subtitle: "Fortgeschrittene Statistische Software für NF"
-author: "Name (Martrikelnummer), Name (Martrikelnummer), ..."
+author: "Finn Liebig (12402643)"
 date: "`r Sys.Date()`"
 output: distill::distill_article
 ---
@@ -86,7 +86,7 @@ a)  Load the `pixar_films` dataset into R. Clean the dataset by removing
 b)  Inspect the film titles manually. Which films form a film series? A
     film series can be identified by a common word in the titles of the
     films, often in conjunction with a number in the title,
-    e.g. "Despicable Me" and "Despicable Me 2". Create a dataframe which
+    e.g. "Despicable Me" and "Despicable Me 2". Create a dataframe which
     displays a list of the different series with the titles of the films
     and how many films belong to the series. Output the dataframe.
 
