@@ -278,12 +278,12 @@ e)  Use R to answer your chosen question. Please limit your analysis to
     the functions and techniques we have covered so far in the course.
     You are **not expected** to use advanced statistical models or
     external packages which haven't been introduced.
-    
-    Q1:
 
     ```{r}
 terrorist_weapon <- read.csv("data/Terrorist attacks by weapon type - Global Terrorism Database (2018).csv")
     ```
+
+    Q1:
 
 ```{r}
 waffen_spalten <- c(colnames(terrorist_weapon[3:12]))
@@ -306,6 +306,9 @@ ggplot(waffen_vis, aes(x = Year, y = Haeufigkeit_pro_Jahr, color = Waffentyp)) +
        color = "Waffentyp") +
   theme_minimal()
 ```
+
+    Q2:
+    
 
 f)  Create a meaningful plot / figure with the dataset. Make sure to
     provide a figure caption (via the chunk options / Rmarkdown) and
