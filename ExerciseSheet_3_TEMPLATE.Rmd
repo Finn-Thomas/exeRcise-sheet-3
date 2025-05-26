@@ -116,6 +116,7 @@ library(broom)
 library(coefplot)
 library(effects)
 library(reticulate)
+library(nnet)
 ```
 
 ## Exercise 3: Pixar Films (4 Points)
@@ -271,9 +272,10 @@ d)  Come up with a (research) question you want to answer with the data
     with the dataset and using R
 
     Q1: Welche Waffentypen wurden weltweit am häufigsten bei
-    Terroranschlägen verwendet und zeigt sich über die Jahre hinweg ein
-    Trend in der Nutzung bestimmter Waffenarten?
-
+        Terroranschlägen verwendet und zeigt sich über die Jahre hinweg ein
+        Trend in der Nutzung bestimmter Waffenarten?
+    
+    Q2: Wie beeinflussen die Anteile verschiedener Waffentypen in terroristischen Anschlägen die               Wahrscheinlichkeit, dass ein Land in Nordamerika liegt?
 e)  Use R to answer your chosen question. Please limit your analysis to
     the functions and techniques we have covered so far in the course.
     You are **not expected** to use advanced statistical models or
@@ -368,6 +370,50 @@ waffen_kontinent <- terrorist_weapon_long_q2 %>%
   ungroup()
 ```
 
+Anpassung Datensatz
+
+```{r}
+weapon_wide <- terrorist_weapon_long_q2 %>%
+  group_by(Entity, Waffentyp) %>%
+  summarise(Anzahl = sum(Haeufigkeit, na.rm = TRUE), .groups = "drop") %>%  
+  ungroup() %>%
+  group_by(Entity) %>%
+  mutate(Anteil = Anzahl / sum(Anzahl, na.rm = TRUE)) %>%
+  ungroup() %>%
+  mutate(Kontinent = case_when(
+    Entity %in% afrika ~ "Afrika",
+    Entity %in% asien ~ "Asien",
+  Entity %in% europa ~ "Europa",
+   Entity %in% nordamerika ~ "Nordamerika",
+   Entity %in% suedamerika ~ "Südamerika",
+    Entity %in% ozeanien ~ "Ozeanien",
+    TRUE ~ "Unbekannt" 
+  )) %>%
+   select(-Anzahl) %>%  # Entfernt die 'Anzahl'-Spalte
+  pivot_wider(
+    names_from = Waffentyp,  # Wandelt die Waffentypen in Spalten um
+    values_from = Anteil,    # Verwendet den Anteil als Wert
+    values_fill = list(Anteil = 0)  # Füllt leere Werte mit 0
+  )
+weapon_wide$Kontinent <- as.factor(weapon_wide$Kontinent)
+weapon_wide <- weapon_wide %>%
+  mutate(Kontinent_bin = if_else(Kontinent == "Nordamerika", 1, 0)) %>%
+select(-Entity) %>%
+  select(-Kontinent)
+```
+
+Modell:
+
+```{r}
+model <- glm(Kontinent_bin ~ ., data = weapon_wide, family = binomial)
+summary(model)
+```
+
+
+f)  Create a meaningful plot / figure with the dataset. Make sure to
+    provide a figure caption (via the chunk options / Rmarkdown) and
+    correctly label the figure.
+
 ```{r}
 ggplot(waffen_kontinent, aes(x = Kontinent, y = Anteil, fill = Waffentyp)) +
   geom_bar(stat = "identity", position = "dodge") +
@@ -381,10 +427,6 @@ ggplot(waffen_kontinent, aes(x = Kontinent, y = Anteil, fill = Waffentyp)) +
   theme(axis.text.x = element_text(angle = 30, hjust = 1))
 ```
 
-
-f)  Create a meaningful plot / figure with the dataset. Make sure to
-    provide a figure caption (via the chunk options / Rmarkdown) and
-    correctly label the figure.
 
 ## Final Note
 
