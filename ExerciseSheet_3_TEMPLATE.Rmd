@@ -250,6 +250,7 @@ ggplot(films_df, aes(x = series, y = rotten_tomatoes, fill = title)) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
+Es fällt auf, dass der erste Film einer Reihe immer der höchstbewerteste Film der Reihe ist. Ausnahme ist "Toy Story", bei welcher die ersten beiden Filme gleich hoch gewertet wurden. 
 
 ## Exercise 4: Open Analysis (4 points)
 
@@ -414,7 +415,7 @@ f)  Create a meaningful plot / figure with the dataset. Make sure to
     provide a figure caption (via the chunk options / Rmarkdown) and
     correctly label the figure.
 
-```{r}
+```{r fig-waffenkontinent, fig.cap="Abbildung 1: Durchschnittlicher Anteil verschiedener Waffentypen bei terroristischen Anschlägen, gruppiert nach Kontinent."}
 ggplot(waffen_kontinent, aes(x = Kontinent, y = Anteil, fill = Waffentyp)) +
   geom_bar(stat = "identity", position = "dodge") +
   labs(
@@ -426,6 +427,8 @@ ggplot(waffen_kontinent, aes(x = Kontinent, y = Anteil, fill = Waffentyp)) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 30, hjust = 1))
 ```
+
+Nur in Nordamerika überwiegt die relative Anzahl an terroristischen Anschlägen mit Schusswaffen eindeutig explosiven Waffen. Auch waren Staaten in Nordamerika im Gegensatz zu den anderen Staaten Opfer von Bioterrorismus - daher auch die Signifikanz in der logistischen Regression. 
 
 
 ## Final Note
