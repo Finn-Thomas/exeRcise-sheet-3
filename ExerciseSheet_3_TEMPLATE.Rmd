@@ -419,10 +419,10 @@ f)  Create a meaningful plot / figure with the dataset. Make sure to
 
 ```{r fig-waffenkontinent, fig.cap="Abbildung 1: Durchschnittlicher Anteil verschiedener Waffentypen bei terroristischen Anschlägen, gruppiert nach Kontinent."}
 ggplot(waffen_kontinent, aes(x = Kontinent, y = Anteil, fill = Waffentyp)) +
-  geom_bar(stat = "identity", position = position_dodge(width = 0.9)) +
-  geom_text(aes(label = Anteil),
-            position = position_dodge(width = 0.9),
-            vjust = 1.5, color = "white", size = 3) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.8), width = 1) +
+  geom_text(aes(label = round(Anteil, 4), y = -0.04),
+            position = position_dodge(width = 0.8),
+            vjust = 0, size = 2, angle = 90) +
   labs(
     title = "Verwendung von Waffentypen nach Kontinent",
     x = "Kontinent",
@@ -430,7 +430,8 @@ ggplot(waffen_kontinent, aes(x = Kontinent, y = Anteil, fill = Waffentyp)) +
     fill = "Waffentyp"
   ) +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+  theme(axis.text.x = element_text(angle = 30, hjust = 1)) +
+  coord_cartesian(ylim = c(-0.05, max(waffen_kontinent$Anteil) * 1.1))
 ```
 
 Nur in Nordamerika überwiegt die relative Anzahl an terroristischen Anschlägen mit Schusswaffen eindeutig explosiven Waffen. Auch waren Staaten in Nordamerika im Gegensatz zu den anderen Staaten Opfer von Bioterrorismus - daher auch die Signifikanz in der logistischen Regression. 
