@@ -276,7 +276,8 @@ d)  Come up with a (research) question you want to answer with the data
         Terroranschlägen verwendet und zeigt sich über die Jahre hinweg ein
         Trend in der Nutzung bestimmter Waffenarten?
     
-    Q2: Wie beeinflussen die Anteile verschiedener Waffentypen in terroristischen Anschlägen die               Wahrscheinlichkeit, dass ein Land in Nordamerika liegt?
+    Q2: Lässt sich anhand der relativen Waffenanteile pro Land voraussagen, ob ein Land in Nordamerika         liegt oder nicht??
+    
 e)  Use R to answer your chosen question. Please limit your analysis to
     the functions and techniques we have covered so far in the course.
     You are **not expected** to use advanced statistical models or
@@ -410,6 +411,7 @@ model <- glm(Kontinent_bin ~ ., data = weapon_wide, family = binomial)
 summary(model)
 ```
 
+Sentence: Anhand der Ergebnisse lässt zeigen, dass die Forschungsfrage mit einem Nein beantworten lässt, da die Beta-Werte für unser Log-Modell statistisch nicht (besonders) signifikant sind.
 
 f)  Create a meaningful plot / figure with the dataset. Make sure to
     provide a figure caption (via the chunk options / Rmarkdown) and
@@ -417,7 +419,10 @@ f)  Create a meaningful plot / figure with the dataset. Make sure to
 
 ```{r fig-waffenkontinent, fig.cap="Abbildung 1: Durchschnittlicher Anteil verschiedener Waffentypen bei terroristischen Anschlägen, gruppiert nach Kontinent."}
 ggplot(waffen_kontinent, aes(x = Kontinent, y = Anteil, fill = Waffentyp)) +
-  geom_bar(stat = "identity", position = "dodge") +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9)) +
+  geom_text(aes(label = Anteil),
+            position = position_dodge(width = 0.9),
+            vjust = 1.5, color = "white", size = 3) +
   labs(
     title = "Verwendung von Waffentypen nach Kontinent",
     x = "Kontinent",
