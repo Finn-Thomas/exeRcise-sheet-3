@@ -434,9 +434,6 @@ ggplot(waffen_kontinent, aes(x = Kontinent, y = Anteil, fill = Waffentyp)) +
   coord_cartesian(ylim = c(-0.05, max(waffen_kontinent$Anteil) * 1.1))
 ```
 
-Nur in Nordamerika überwiegt die relative Anzahl an terroristischen Anschlägen mit Schusswaffen eindeutig explosiven Waffen. Auch waren Staaten in Nordamerika im Gegensatz zu den anderen Staaten Opfer von Bioterrorismus - daher auch die Signifikanz in der logistischen Regression. 
-
-
 ## Final Note
 
 Make sure to push all your commits and changes to GitHub before
