@@ -196,7 +196,8 @@ public_response_clean <- public_response %>%
   mutate(cinema_score = factor(cinema_score,
                                levels = c("A-", "A", "A+"),
                                ordered = TRUE))
-public_response_clean %>% arrange(cinema_score)
+public_response_clean_ordered <- public_response_clean %>% arrange(cinema_score)
+public_response_clean_ordered
 ```
 
 ```{r}
