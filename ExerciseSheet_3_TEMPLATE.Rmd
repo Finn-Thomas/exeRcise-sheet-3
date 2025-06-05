@@ -52,35 +52,27 @@ d)  Name 2 strengths and 2 weaknesses of git. (Don't forget to create a
 
     **Vorteile**
 
--   *Versionskontrolle*: Mithilfe von Git lässt sich die
-    Bearbeitungshistorie des Dokuments zurückverfolgen. Damit ist es
-    nicht nur möglich Back-up Dateien zu erstellen, sondern es ist
-    möglich auf einzelne Arbeitsschritte sprich Änderungen zuzugreifen.
-    Das erleichtert u.a. eventuelle Fehlerbehebungen und stellt eine
-    weitere Sicherheitsvorkehrung beim Speichern des Dokuments dar.
+-   *Versionskontrolle*: Ein Zugriff auf die Bearbeitungshistorie ist
+    insofern sinnvoll, als dass neben einer generellen zusätzlichen
+    Speichermöglichkeit auch die Zwischenschritte verfolgen lassen.
+    Dadurch lassen sich u.a. verschiedene Versionen desselben Codes
+    vergleichen.
 
--   *Reproduzierbarkeit*: Dadurch, dass das Repository geteilt werden
-    kann, ist es möglich, dass Dritte die vorgenommenen
-    Bearbeitungsschritte in ihrem Projekt leichter nachvollziehen können
-    und bei Bedarf auch reproduzieren können. Das fördert den
-    wissenschaftlichen Austausch im allgemeinen ebenso wie die Kontrolle
-    und Verbesserung bei wissenschaftlicher Arbeiten.
+-   *Reproduktion*: Durch die Möglichkeit des Teilens, wird der
+    wissenschaftliche Ausstausch gefördert, denn die Ergebnisse sind
+    nicht nur für alle reproduzierbar, sondern andere Forscher können
+    den Code nutzen, um diesen eventuell sogar zu verbessern.
 
     **Nachteile**
 
 -   *Arbeit mit der Befehlszeile*: Git selbst besitzt kein ordentliches
-    IDE. Stattdessen muss ein Großteil der Befehle immer über die
-    Befehlszeile eingegeben werden. Das kann umständlich und für
-    Anfänger ungeeignet sein. Einige IDEs wie R Studio besitzen
-    integrierte IDEs, diese bilden allerdings nur bedingt die Funktionen
-    von Git ab.
+    IDE. Die Eingabe über die Commandzeile ist extrem umständlich,
+    gerade für Beginner wie uns.
 
--   *Leistung*: Besonders große Projekte mit vielen Dateien und
-    Datenverzweigungen können bei Git Leistungsprobleme hervorrufen.
-    Gerade bei älteren Computern macht sich das dann in der allgemeinen
-    Performance der aktiven Programme zu bemerken und kann eventuell zu
-    Abstürzen führen. Des weiteren kann Git nicht im Hintergrund laufen,
-    was ebenfalls mehr Arbeitsspeicher erfordern kann.
+-   *Leistung*: Besonders große Projekte mit vielen Dateien können bei
+    Git Leistungsproblemehervorrufen. Des weiteren kann Git nicht im
+    Hintergrund laufen, was ebenfalls mehr Arbeitsspeicher erfordern
+    kann.
 
 e)  Knit this exercise sheet. Some new files will automatically be
     generated when knitting the sheet e.g. the HTML page. Ignore these
@@ -143,11 +135,19 @@ a)  Load the `pixar_films` dataset into R. Clean the dataset by removing
     unique(pixar_films_clean$film_rating)
     ```
 
-Die möglichen Werte sind G (General Audience: Für alle Altersgruppen geeignet) sowie PG (Parental Guidance: Einige Inhalte könnten ungeeignet für Kinder sein). Über die Filme mit Wert N/A lässt sich keine Aussage treffen. Deswegen werde ich die entsprechenden Zeilen (nach Absprache mit Frau Steinberg in der Drop-In-Session) löschen.
+Die möglichen Werte sind G (General Audience: Für alle Altersgruppen
+geeignet) sowie PG (Parental Guidance: Einige Inhalte könnten ungeeignet
+für Kinder sein). Über die Filme mit Wert N/A lässt sich keine Aussage
+treffen. Deswegen werde ich die entsprechenden Zeilen (nach Absprache
+mit Frau Steinberg in der Drop-In-Session) löschen.
 
-Ein Faktor ist in R sinnvoll, wenn es sich um kategorische Daten mit natürlicher Reihenfolge handelt - wie bei den Filmratings "G" und "PG". Diese spiegeln zunehmende Alterseinschränkungen wider.
+Ein Faktor ist in R sinnvoll, wenn es sich um kategorische Daten mit
+natürlicher Reihenfolge handelt - wie bei den Filmratings "G" und "PG".
+Diese spiegeln zunehmende Alterseinschränkungen wider.
 
-Faktoren bewahren diese Reihenfolge, was bei Sortierungen, Visualisierungen oder statistischen Modellen hilfreich ist. Zudem sparen sie Speicherplatz und unterstützen eine saubere Datenanalyse.
+Faktoren bewahren diese Reihenfolge, was bei Sortierungen,
+Visualisierungen oder statistischen Modellen hilfreich ist. Zudem sparen
+sie Speicherplatz und unterstützen eine saubere Datenanalyse.
 
 ```{r}
 pixar_films_superclean <- pixar_films_clean %>% filter(film_rating != "N/A") %>%
@@ -203,7 +203,9 @@ pixar_combined <- left_join(pixar_films_superclean, public_response_clean,
                             by = c("film" = "film"))
 ```
 
-Anmerkung: Aufgrund der vorherigen Korrekturen von NA-Werten, besitzt mein kombinierter Datensatz eventuell weniger Reihen als die Musterlösung (auch das wurde in der Zoom-Session genemigt).
+Anmerkung: Aufgrund der vorherigen Korrekturen von NA-Werten, besitzt
+mein kombinierter Datensatz eventuell weniger Reihen als die
+Musterlösung (auch das wurde in der Zoom-Session genemigt).
 
 d)  Choose one of the variables representing the public response and
     create a bar plot for the films belonging to a series. Here are the
@@ -246,7 +248,10 @@ ggplot(films_df, aes(x = series, y = rotten_tomatoes, fill = title)) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
-Es fällt auf, dass der erste Film einer Reihe immer der höchstbewerteste Film der Reihe ist. Ausnahme ist "Toy Story", bei welcher die ersten beiden Filme gleich hoch gewertet wurden. 
+
+Es fällt auf, dass der erste Film einer Reihe immer der höchstbewerteste
+Film der Reihe ist. Ausnahme ist "Toy Story", bei welcher die ersten
+beiden Filme gleich hoch gewertet wurden.
 
 ## Exercise 4: Open Analysis (4 points)
 
@@ -260,23 +265,26 @@ a)  Go to <https://github.com/owid/owid-datasets/tree/master/datasets>
 b)  Download the dataset and track it in git.
 c)  Put the name / title of the dataset and a link to it below.
 
--   Dataset Name: Terrorist attacks by weapon type - Global Terrorism Database (2018)
--   Link: <https://github.com/owid/owid-datasets/tree/master/datasets/Terrorist%20attacks%20by%20weapon%20type%20-%20Global%20Terrorism%20Database%20(2018)>...
+-   Dataset Name: Terrorist attacks by weapon type - Global Terrorism
+    Database (2018)
+-   Link:
+    [https://github.com/owid/owid-datasets/tree/master/datasets/Terrorist%20attacks%20by%20weapon%20type%20-%20Global%20Terrorism%20Database%20(2018)](https://github.com/owid/owid-datasets/tree/master/datasets/Terrorist%20attacks%20by%20weapon%20type%20-%20Global%20Terrorism%20Database%20(2018)){.uri}...
 
 d)  Come up with a (research) question you want to answer with the data
     and briefly explain why you believe this is an interesting question
     within one sentence. It should be a question that can be answered
     with the dataset and using R
-    
-    Q1: Lässt sich anhand der relativen Waffenanteile pro Land voraussagen, ob ein Land in Nordamerika         liegt oder nicht??
-    
+
+    Q1: Lässt sich anhand der relativen Waffenanteile pro Land
+    voraussagen, ob ein Land in Nordamerika liegt oder nicht??
+
 e)  Use R to answer your chosen question. Please limit your analysis to
     the functions and techniques we have covered so far in the course.
     You are **not expected** to use advanced statistical models or
     external packages which haven't been introduced.
 
     ```{r}
-terrorist_weapon <- read.csv("data/Terrorist attacks by weapon type - Global Terrorism Database (2018).csv")
+    terrorist_weapon <- read.csv("data/Terrorist attacks by weapon type - Global Terrorism Database (2018).csv")
     ```
 
     Q1:
@@ -293,7 +301,10 @@ waffen_vis <- terrorist_weapon_long %>%
   ungroup()
 ```
 
-    Erstellung der Länderlisten: 
+```         
+Erstellung der Länderlisten: 
+```
+
 ```{r}
 asien <- c("Afghanistan", "Armenia", "Azerbaijan", "Bahrain", "Bangladesh", "Bhutan",
            "Brunei", "Cambodia", "China", "Cyprus", "Georgia", "India", "Indonesia",
@@ -331,7 +342,7 @@ ozeanien <- c("Australia", "Fiji", "Kiribati", "Marshall Islands", "Micronesia",
               "Nauru", "New Zealand", "Palau", "Papua New Guinea", "Samoa",
               "Solomon Islands", "Tonga", "Tuvalu", "Vanuatu")
 ```
-    
+
 ```{r}
 terrorist_weapon_long_q2 <- terrorist_weapon_long %>%
   mutate(Kontinent = case_when(
@@ -391,7 +402,9 @@ model <- glm(Kontinent_bin ~ ., data = weapon_wide, family = binomial)
 summary(model)
 ```
 
-Antwort: Anhand der Ergebnisse lässt zeigen, dass die Forschungsfrage mit einem Nein beantworten lässt, da die Beta-Werte für unser Log-Modell statistisch nicht (besonders) signifikant sind.
+Antwort: Anhand der Ergebnisse lässt zeigen, dass die Forschungsfrage
+mit einem Nein beantworten lässt, da die Beta-Werte für unser Log-Modell
+statistisch nicht (besonders) signifikant sind.
 
 f)  Create a meaningful plot / figure with the dataset. Make sure to
     provide a figure caption (via the chunk options / Rmarkdown) and
