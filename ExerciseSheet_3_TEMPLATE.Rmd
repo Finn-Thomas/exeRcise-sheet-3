@@ -143,18 +143,11 @@ a)  Load the `pixar_films` dataset into R. Clean the dataset by removing
     unique(pixar_films_clean$film_rating)
     ```
 
-    Die möglichen Werte sind G (General Audience: Für alle Altersgruppen
-    geeignet) sowie PG (Parental Guidance: Einige Inhalte könnten
-    ungeeignet für Kinder sein). Über die Filme mit Wert N/A lässt sich
-    keine Aussage treffen.
+Die möglichen Werte sind G (General Audience: Für alle Altersgruppen geeignet) sowie PG (Parental Guidance: Einige Inhalte könnten ungeeignet für Kinder sein). Über die Filme mit Wert N/A lässt sich keine Aussage treffen. Deswegen werde ich die entsprechenden Zeilen (nach Absprache mit Frau Steinberg in der Drop-In-Session) löschen.
 
-Ein Faktor ist in R sinnvoll, wenn es sich um kategorische Daten mit
-natürlicher Reihenfolge handelt – wie bei den Filmratings "G" und "PG".
-Diese spiegeln zunehmende Alterseinschränkungen wider.
+Ein Faktor ist in R sinnvoll, wenn es sich um kategorische Daten mit natürlicher Reihenfolge handelt - wie bei den Filmratings "G" und "PG". Diese spiegeln zunehmende Alterseinschränkungen wider.
 
-Faktoren bewahren diese Reihenfolge, was bei Sortierungen,
-Visualisierungen oder statistischen Modellen hilfreich ist. Zudem sparen
-sie Speicherplatz und unterstützen eine saubere Datenanalyse.
+Faktoren bewahren diese Reihenfolge, was bei Sortierungen, Visualisierungen oder statistischen Modellen hilfreich ist. Zudem sparen sie Speicherplatz und unterstützen eine saubere Datenanalyse.
 
 ```{r}
 pixar_films_superclean <- pixar_films_clean %>% filter(film_rating != "N/A") %>%
@@ -210,6 +203,8 @@ pixar_combined <- left_join(pixar_films_superclean, public_response_clean,
                             by = c("film" = "film"))
 ```
 
+Anmerkung: Aufgrund der vorherigen Korrekturen von NA-Werten, besitzt mein kombinierter Datensatz eventuell weniger Reihen als die Musterlösung (auch das wurde in der Zoom-Session genemigt).
+
 d)  Choose one of the variables representing the public response and
     create a bar plot for the films belonging to a series. Here are the
     details of the plot:
@@ -229,12 +224,13 @@ d)  Choose one of the variables representing the public response and
 films_df <- pixar_series_df %>%
   separate_rows(film_titles, sep = "; ") %>%
   rename(title = film_titles)
+films_df$title <- factor(films_df$title, levels = films_df$title)
 films_df$rotten_tomatoes <- c(
-  100, 100, 98, 97,       # Toy Story 1–4
-  97, 93,              # Incredibles 1–2
-  75, 40, 69,          # Cars 1–3
-  96, 80,              # Monsters Inc. + University
-  99, 94               # Finding Nemo + Dory
+  100, 100, 98, 97,       
+  97, 93,              
+  75, 40, 69,     
+  96, 80,              
+  99, 94               
 )
 ```
 
@@ -242,7 +238,7 @@ films_df$rotten_tomatoes <- c(
 ggplot(films_df, aes(x = series, y = rotten_tomatoes, fill = title)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   labs(
-    title = "Audience Scores of Pixar Film Series",
+    title = "Audience Scores of Pixar Film Series (via Rotten Tomato)",
     x = "Film Series",
     y = "Score on Rotten Tomatoes (%)",
     fill = "Film Title"
@@ -264,19 +260,15 @@ a)  Go to <https://github.com/owid/owid-datasets/tree/master/datasets>
 b)  Download the dataset and track it in git.
 c)  Put the name / title of the dataset and a link to it below.
 
--   Dataset Name: ...
--   Link: <https://github.com/owid/owid-datasets/>...
+-   Dataset Name: Terrorist attacks by weapon type - Global Terrorism Database (2018)
+-   Link: <https://github.com/owid/owid-datasets/tree/master/datasets/Terrorist%20attacks%20by%20weapon%20type%20-%20Global%20Terrorism%20Database%20(2018)>...
 
 d)  Come up with a (research) question you want to answer with the data
     and briefly explain why you believe this is an interesting question
     within one sentence. It should be a question that can be answered
     with the dataset and using R
-
-    Q1: Welche Waffentypen wurden weltweit am häufigsten bei
-        Terroranschlägen verwendet und zeigt sich über die Jahre hinweg ein
-        Trend in der Nutzung bestimmter Waffenarten?
     
-    Q2: Lässt sich anhand der relativen Waffenanteile pro Land voraussagen, ob ein Land in Nordamerika         liegt oder nicht??
+    Q1: Lässt sich anhand der relativen Waffenanteile pro Land voraussagen, ob ein Land in Nordamerika         liegt oder nicht??
     
 e)  Use R to answer your chosen question. Please limit your analysis to
     the functions and techniques we have covered so far in the course.
@@ -300,18 +292,6 @@ waffen_vis <- terrorist_weapon_long %>%
   summarise(Haeufigkeit_pro_Jahr = sum(Haeufigkeit, na.rm = TRUE)) %>%
   ungroup()
 ```
-
-```{r}
-ggplot(waffen_vis, aes(x = Year, y = Haeufigkeit_pro_Jahr, color = Waffentyp)) +
-  geom_line() +
-  labs(title = "Trends der Waffentypen bei Terroranschlägen",
-       x = "Jahr",
-       y = "Häufigkeit",
-       color = "Waffentyp") +
-  theme_minimal()
-```
-
-    Q2:
 
     Erstellung der Länderlisten: 
 ```{r}
@@ -391,11 +371,11 @@ weapon_wide <- terrorist_weapon_long_q2 %>%
     Entity %in% ozeanien ~ "Ozeanien",
     TRUE ~ "Unbekannt" 
   )) %>%
-   select(-Anzahl) %>%  # Entfernt die 'Anzahl'-Spalte
+   select(-Anzahl) %>%
   pivot_wider(
-    names_from = Waffentyp,  # Wandelt die Waffentypen in Spalten um
-    values_from = Anteil,    # Verwendet den Anteil als Wert
-    values_fill = list(Anteil = 0)  # Füllt leere Werte mit 0
+    names_from = Waffentyp, 
+    values_from = Anteil,   
+    values_fill = list(Anteil = 0)
   )
 weapon_wide$Kontinent <- as.factor(weapon_wide$Kontinent)
 weapon_wide <- weapon_wide %>%
@@ -411,7 +391,7 @@ model <- glm(Kontinent_bin ~ ., data = weapon_wide, family = binomial)
 summary(model)
 ```
 
-Sentence: Anhand der Ergebnisse lässt zeigen, dass die Forschungsfrage mit einem Nein beantworten lässt, da die Beta-Werte für unser Log-Modell statistisch nicht (besonders) signifikant sind.
+Antwort: Anhand der Ergebnisse lässt zeigen, dass die Forschungsfrage mit einem Nein beantworten lässt, da die Beta-Werte für unser Log-Modell statistisch nicht (besonders) signifikant sind.
 
 f)  Create a meaningful plot / figure with the dataset. Make sure to
     provide a figure caption (via the chunk options / Rmarkdown) and
