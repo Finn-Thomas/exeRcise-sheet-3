@@ -239,7 +239,7 @@ films_df$rotten_tomatoes <- c(
 ggplot(films_df, aes(x = series, y = rotten_tomatoes, fill = title)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   labs(
-    title = "Audience Scores of Pixar Film Series (via Rotten Tomato)",
+    title = "Rotten Tomato Scores of Pixar Film Series",
     x = "Film Series",
     y = "Score on Rotten Tomatoes (%)",
     fill = "Film Title"
@@ -401,15 +401,15 @@ model <- glm(Kontinent_bin ~ ., data = weapon_wide, family = binomial)
 summary(model)
 ```
 
-Antwort: Anhand der Ergebnisse lässt zeigen, dass die Forschungsfrage
+Antwort: Anhand der Ergebnisse lässt zeigen, dass sich die Forschungsfrage
 mit einem Nein beantworten lässt, da die Beta-Werte für unser Log-Modell
-statistisch nicht (besonders) signifikant sind.
+statistisch nicht (besonders) signifikant sind. Das liegt vermutlich daran, dass innerhalb der Länder Nordamerikas Unterschiede in der relativen Anzahl der Waffentypen vorliegen.
 
 f)  Create a meaningful plot / figure with the dataset. Make sure to
     provide a figure caption (via the chunk options / Rmarkdown) and
     correctly label the figure.
 
-```{r fig-waffenkontinent, fig.cap="Abbildung 1: Durchschnittlicher Anteil verschiedener Waffentypen bei terroristischen Anschlägen, gruppiert nach Kontinent."}
+```{r fig-waffenkontinent, fig.cap="Relativer Anteil verschiedener Waffentypen bei terroristischen Anschlägen, gruppiert nach Kontinent."}
 ggplot(waffen_kontinent, aes(x = Kontinent, y = Anteil, fill = Waffentyp)) +
   geom_bar(stat = "identity", position = position_dodge(width = 0.8), width = 1) +
   geom_text(aes(label = round(Anteil, 4), y = -0.04),
