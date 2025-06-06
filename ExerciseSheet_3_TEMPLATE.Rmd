@@ -139,7 +139,7 @@ a)  Load the `pixar_films` dataset into R. Clean the dataset by removing
 
 Die möglichen Werte sind G (General Audience: Für alle Altersgruppen
 geeignet) sowie PG (Parental Guidance: Einige Inhalte könnten ungeeignet
-für Kinder sein). Beide Werte stellen Richtlinien/Beschränkungen dar, welche junge Kinder vonr ungeeigneten Inhalten schützen sollen. Über die Filme mit Wert N/A lässt sich keine Aussage
+für Kinder sein). Beide Werte stellen Richtlinien/Beschränkungen dar, welche junge Kinder vor ungeeigneten Inhalten schützen sollen. Über die Filme mit Wert N/A lässt sich keine Aussage
 treffen. Deswegen werde ich die entsprechenden Zeilen (nach Absprache
 mit Frau Steinberg in der Drop-In-Session) löschen.
 
