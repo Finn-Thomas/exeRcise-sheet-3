@@ -277,8 +277,10 @@ d)  Come up with a (research) question you want to answer with the data
     within one sentence. It should be a question that can be answered
     with the dataset and using R
 
-    Q1: Lässt sich anhand der relativen Waffenanteile pro Land
-    voraussagen, ob ein Land in Nordamerika liegt oder nicht??
+Q1: Lässt sich anhand der relativen Waffenanteile bei Terroranschlägen pro Land (Durchschnitt          über alle Jahre hinweg) voraussagen, ob ein Land in Nordamerika liegt oder nicht??
+    
+Es ist interessant herauszufinden, ob sich regionale Unterschiede im Terrorismus im verwendeten Waffentyp statistisch signifikant widerspiegeln könnten. Eine Beantwortung dieser Frage mit Ja, könnte Basis effektiverer Methoden zur Terrorbekämpfung sein, da nun besser geplant werden könnte, mit welchen Waffentypen man es wohl am ehesten zu tun haben wird.
+    
 
 e)  Use R to answer your chosen question. Please limit your analysis to
     the functions and techniques we have covered so far in the course.
@@ -405,13 +407,13 @@ summary(model)
 ```
 
 Antwort: Anhand der Ergebnisse lässt zeigen, dass sich die Forschungsfrage
-mit einem Nein beantworten lässt, da die Beta-Werte für unser Log-Modell statistisch nicht (besonders) signifikant sind. Das liegt vermutlich daran, dass innerhalb der Länder Nordamerikas Unterschiede in der relativen Anzahl der Waffentypen vorliegen. Ich hätte erwartet, dass die vielen Attacken durch Schusswaffen ein signifikantes Indiz sind (siehe f)). Allerdings kann es sein, dass diese Grafik stark durch die USA geprägt sind und der relative Gesamtanteil über ganz Nordamerika nicht die relativen Anteile der einzelnen Länder wiederspiegelt. 
+mit einem Nein beantworten lässt, da die Beta-Werte für unser Log-Modell statistisch nicht (besonders) signifikant sind. Das liegt vermutlich daran, dass innerhalb der Länder Nordamerikas Unterschiede in der relativen Anzahl der Waffentypen vorliegen. Ich hätte erwartet, dass die vielen Attacken durch Schusswaffen ein signifikantes Indiz sind (siehe f)). Allerdings kann es sein, dass diese Grafik stark durch die USA geprägt sind und der relative Gesamtanteil über ganz Nordamerika nicht die relativen Anteile der einzelnen Länder wiederspiegelt. Ein weiterer Punkt könnte die Verfälschung durch die starke Gewichtung von selten verwendeten Waffen sein, welche nur in einem Land Nordamerikas vorkamen, aber global so selten sind, dass sie bei der Beantwortung der Frage stark gewichtet werden und die eigentlich relevanten Datenstrukturen dominieren und verfälschen (z.B. Biowaffen). Man könnte einige Typen ausschließen, um eventuell ein statistisch signifikantes Ergebnis zu erhalten.
 
 f)  Create a meaningful plot / figure with the dataset. Make sure to
     provide a figure caption (via the chunk options / Rmarkdown) and
     correctly label the figure.
 
-```{r fig-waffenkontinent, fig.cap="Relativer Anteil verschiedener Waffentypen bei terroristischen Anschlägen, gruppiert nach Kontinent."}
+```{r fig-waffenkontinent, fig.cap="Relativer Anteil (durchschnittlich von 1970-2017) verschiedener Waffentypen bei terroristischen Anschlägen, gruppiert nach Kontinent."}
 ggplot(waffen_kontinent, aes(x = Kontinent, y = Anteil, fill = Waffentyp)) +
   geom_bar(stat = "identity", position = position_dodge(width = 0.8), width = 1) +
   geom_text(aes(label = round(Anteil, 4), y = -0.04),
