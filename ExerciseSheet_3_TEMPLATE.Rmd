@@ -405,8 +405,7 @@ summary(model)
 ```
 
 Antwort: Anhand der Ergebnisse lässt zeigen, dass sich die Forschungsfrage
-mit einem Nein beantworten lässt, da die Beta-Werte für unser Log-Modell
-statistisch nicht (besonders) signifikant sind. Das liegt vermutlich daran, dass innerhalb der Länder Nordamerikas Unterschiede in der relativen Anzahl der Waffentypen vorliegen.
+mit einem Nein beantworten lässt, da die Beta-Werte für unser Log-Modell statistisch nicht (besonders) signifikant sind. Das liegt vermutlich daran, dass innerhalb der Länder Nordamerikas Unterschiede in der relativen Anzahl der Waffentypen vorliegen. Ich hätte erwartet, dass die vielen Attacken durch Schusswaffen ein signifikantes Indiz sind (siehe f)). Allerdings kann es sein, dass diese Grafik stark durch die USA geprägt sind und der relative Gesamtanteil über ganz Nordamerika nicht die relativen Anteile der einzelnen Länder wiederspiegelt. 
 
 f)  Create a meaningful plot / figure with the dataset. Make sure to
     provide a figure caption (via the chunk options / Rmarkdown) and
